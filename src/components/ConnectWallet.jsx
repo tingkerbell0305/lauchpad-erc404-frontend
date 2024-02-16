@@ -23,7 +23,7 @@ export const ConnectWallet = (props) => {
                         authenticationStatus === 'authenticated');
                 props.setWalletConnected(connected)
                 return (
-                    <div className='w-fix connect-button mr-8 rounded-lg'
+                    <div className='w-fix flex flex-row justify-end'
                         {...(!ready && {
                             'aria-hidden': true,
                             'style': {
@@ -36,20 +36,20 @@ export const ConnectWallet = (props) => {
                         {(() => {
                             if (!connected) {
                                 return (
-                                    <button onClick={openConnectModal} type="button" className='px-5 py-2.5'>
+                                    <button onClick={openConnectModal} type="button" className='connect-button rounded-lg px-5 py-2.5'>
                                         Connect Wallet
                                     </button>
                                 );
                             }
                             if (chain.unsupported) {
                                 return (
-                                    <button onClick={openChainModal} type="button" className='px-5 py-2.5'>
+                                    <button onClick={openChainModal} type="button" className='connect-button rounded-lg px-5 py-2.5'>
                                         Wrong network
                                     </button>
                                 );
                             }
                             return (
-                                <div style={{ display: 'flex', gap: 12 }}>
+                                <div className='flex flex-row justify-end connect-button rounded-lg gap-1'>
                                     <button
                                         onClick={openChainModal}
                                         style={{ display: 'flex', alignItems: 'center' }}

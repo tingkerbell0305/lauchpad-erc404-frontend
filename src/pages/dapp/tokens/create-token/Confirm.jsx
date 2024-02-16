@@ -30,7 +30,7 @@ const Confirm = ({ deployedContractAddr }) => {
           <div className="flex justify-start items-start flex-col gap-1">
             <h3 className="text-white text-2xl font-semibold">Logo:</h3>
             <img
-              src="/test.png"
+              src="/logo.png"
               className="w-24 object-cover rounded-lg aspect-square"
               alt=""
             />

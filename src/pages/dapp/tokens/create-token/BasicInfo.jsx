@@ -1,25 +1,125 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import SelectChainRadio from "../../../../components/SelectChainRadio";
 import FloatingLabelInput from "../../../../components/inputs/FloatingLabelInput";
-import { Link } from "react-router-dom";
-
+// import { Link } from "react-router-dom";
 import { formDataContext } from "../../../../contexts/formDataContext";
-import { toast } from "react-toastify";
+import { useNetwork } from "wagmi";
 
 const BasicInfo = () => {
-  const [type, setType] = useState('eth');
+  const { chain } = useNetwork();
+  const [chainType, setChainType] = useState(chain.name);
   const { formData, setFormData } = useContext(formDataContext)
+
+  console.log (chain, "PPPPPPPPPPPPPP")
+  
+  useEffect(() => {
+    if (chain.id === 1)
+      setChainType('mainnet')
+    else if (chain.id === 56)
+      setChainType('bsc')
+    else if (chain.id === 42161)
+      setChainType('arbitrum')
+    else if (chain.id === 137)
+      setChainType('polygon')
+    else if (chain.id === 324)
+      setChainType('zkSync')
+  }, [chain.id]);
 
   const handler = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const handleRadioClick = (type) => {
-    if (type != 'eth') {
-      toast.warn('Please wait. Coming soon!')
-      return
+
+
+
+  const handleRadioClick = async (type) => {
+    if (type === 'mainnet') {
+      if (window.ethereum) {
+        try {
+          // Request to switch to the Binance Smart Chain network
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x1' }], // chainId must be in hexadecimal numbers
+          });
+          setChainType(type)
+        } catch (error) {
+          // Handle the error
+          console.error(error);
+        }
+      } else {
+        // MetaMask is not installed
+        alert('MetaMask is not installed. Please consider installing it: MetaMask [^2^]');
+      }
+    } else if (type === 'bsc') {
+      if (window.ethereum) {
+        try {
+          // Request to switch to the Binance Smart Chain network
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x38' }], // chainId must be in hexadecimal numbers
+          });
+          setChainType(type)
+        } catch (error) {
+          // Handle the error
+          console.error(error);
+        }
+      } else {
+        // MetaMask is not installed
+        alert('MetaMask is not installed. Please consider installing it: MetaMask [^2^]');
+      }
+    } else if (type === 'arbitrum') {
+      setChainType(type)
+      if (window.ethereum) {
+        try {
+          // Request to switch to the Binance Smart Chain network
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0xa4b1' }], // chainId must be in hexadecimal numbers
+          });
+        } catch (error) {
+          // Handle the error
+          console.error(error);
+        }
+      } else {
+        // MetaMask is not installed
+        alert('MetaMask is not installed. Please consider installing it: MetaMask [^2^]');
+      }
+    } else if (type === 'polygon') {
+      setChainType(type)
+      if (window.ethereum) {
+        try {
+          // Request to switch to the Binance Smart Chain network
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x89' }], // chainId must be in hexadecimal numbers
+          });
+        } catch (error) {
+          // Handle the error
+          console.error(error);
+        }
+      } else {
+        // MetaMask is not installed
+        alert('MetaMask is not installed. Please consider installing it: MetaMask [^2^]');
+      }
+    } else if (type === 'zkSync') {
+      setChainType(type)
+      if (window.ethereum) {
+        try {
+          // Request to switch to the Binance Smart Chain network
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x144' }], // chainId must be in hexadecimal numbers
+          });
+        } catch (error) {
+          // Handle the error
+          console.error(error);
+        }
+      } else {
+        // MetaMask is not installed
+        alert('MetaMask is not installed. Please consider installing it: MetaMask [^2^]');
+      }
     }
-    setType(type)
+    // setChainType(type)
   }
 
   return (
@@ -36,45 +136,45 @@ const BasicInfo = () => {
             name="Ethereum"
             label="eth"
             border
-            sub="ERC-20"
-            selected={type == 'eth'}
-            handleRadioClick={() => handleRadioClick('eth')}
+            sub="ERC-404"
+            selected={chainType == 'mainnet'}
+            handleRadioClick={() => handleRadioClick('mainnet')}
           />
           <SelectChainRadio
             border
             img="/Binancelogo.svg"
             name="Binance Smart Chain"
-            sub="BEP-20"
+            sub="BEP-404"
             label="bsc"
-            selected={type == 'bsc'}
+            selected={chainType == 'bsc'}
             handleRadioClick={() => handleRadioClick('bsc')}
           />
           <SelectChainRadio
             img="/arbitrum.webp"
             name="Arbitrum"
-            sub="ERC-20"
+            sub="ERC-404"
             border
             label="arbitrum"
-            selected={type == 'arb'}
-            handleRadioClick={() => handleRadioClick('arb')}
+            selected={chainType == 'arbitrum'}
+            handleRadioClick={() => handleRadioClick('arbitrum')}
           />
           <SelectChainRadio
             img="polygonicon.png"
             name="Polygon (Matic)"
             label="polygon"
             border
-            sub="ERC-20"
-            selected={type == 'poly'}
-            handleRadioClick={() => handleRadioClick('poly')}
+            sub="ERC-404"
+            selected={chainType == 'polygon'}
+            handleRadioClick={() => handleRadioClick('polygon')}
           />
           <SelectChainRadio
             img="/zkicon.png"
             name="zkSync"
             border
             label="zk"
-            sub={"ERC-20"}
-            selected={type == 'zk'}
-            handleRadioClick={() => handleRadioClick('zk')}
+            sub={"ERC-404"}
+            selected={chainType == 'zkSync'}
+            handleRadioClick={() => handleRadioClick('zkSync')}
           />
         </div>
         <div className="flex justify-start items-start flex-col gap-5 sm:gap-8 w-full abc bg-black rounded-xl p-5">
@@ -83,6 +183,7 @@ const BasicInfo = () => {
             name="name"
             placeholder="Ex:Ethereum"
             bgColor="abc bg-black"
+            type="text"
             value={formData.name}
             topLabel="Token Name"
           />
@@ -91,6 +192,7 @@ const BasicInfo = () => {
             name="symbol"
             placeholder="Ex: ETH"
             bgColor="abc bg-black"
+            type="text"
             value={formData.symbol}
             topLabel="Token Symbol"
           />
@@ -99,6 +201,7 @@ const BasicInfo = () => {
             name="decimals"
             placeholder="Ex: 18"
             bgColor="abc bg-black"
+            type="number"
             value={formData.decimals}
             topLabel="Token Decimals"
           />
@@ -107,6 +210,7 @@ const BasicInfo = () => {
             name="supply"
             placeholder="Ex: 100000000"
             bgColor="abc bg-black"
+            type="number"
             value={formData.supply}
             topLabel="Token Supply"
           />

@@ -1,7 +1,7 @@
 export const SelectChainRadio = ({ name, label, img, sub, border, selected, handleRadioClick }) => {
   return (
     <label
-      className={`flex justify-between items-center w-full gap-4 pr-5 ${border ? "border border-solid border-gray rounded-xl" : ""
+      className={`flex justify-between items-center w-full cursor-pointer hover:bg-neutral-800 gap-4 pr-5 ${border ? "border border-solid border-gray rounded-xl" : ""
         }`}
       htmlFor={label}
     >

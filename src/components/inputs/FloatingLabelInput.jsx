@@ -3,7 +3,7 @@ const FloatingLabelInput = ({
   value,
   name,
   placeholder,
-  type = "text",
+  type,
   bgColor = "bg-primary",
   height = "h-[56px]",
   topLabel,

@@ -10,6 +10,7 @@ import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { global } from "./config/global";
 import walletAvatar from "/pandora_avatar.jpg";
+import { mainnet, goerli, bsc, bscTestnet, arbitrum, arbitrumGoerli, polygon, polygonMumbai, zkSync, zkSyncTestnet } from "wagmi/chains";
 
 const WalletTheme = {
   colors: {
@@ -32,9 +33,7 @@ const WalletAvatar = () => {
 };
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [
-    global.chain,
-  ],
+  global.chain,
   [publicProvider()]
 );
 

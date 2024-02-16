@@ -12,6 +12,7 @@ import { formDataContext } from "../../../../contexts/formDataContext";
 import { useContext } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { useNetwork } from "wagmi";
 
 const CreateToken = ({ getContractAddress }) => {
   const path = useLocation();
@@ -21,6 +22,8 @@ const CreateToken = ({ getContractAddress }) => {
   const [errMsg, setErrMsg] = useState(false);
   const [pending, setPending] = useState(false);
 
+  const chain = useNetwork();
+ 
   const { formData } = useContext(formDataContext)
   let mintData = {
     chainId: global.chain.id,
@@ -38,7 +41,10 @@ const CreateToken = ({ getContractAddress }) => {
   const mintToken = async () => {
     setPending(true);
     try {
-      console.log(parseUnits(formData.imageCount, 0));
+      console.log("type", typeof formData.imageCount);
+      console.log("type", typeof formData.decimals);
+      console.log("type", typeof formData.fee);
+      console.log("before", parseUnits(formData.imageCount, 0));
       mintData = {
         ...mintData,
         address: global.launchpad_contract_address,
@@ -47,10 +53,10 @@ const CreateToken = ({ getContractAddress }) => {
         args: [
           formData.name,
           formData.symbol,
-          Math.floor(formData.decimals),
+          parseUnits(formData.decimals, 0),
           formData.supply,
           formData.dataUri,
-          parseUnits(formData.fee, 4),
+          parseUnits(formData.fee.toString(), 4),
           formData.imageType,
           parseUnits(formData.imageCount, 0),
           formData.website,
@@ -58,14 +64,20 @@ const CreateToken = ({ getContractAddress }) => {
         ],
         value: parseUnits("0.1", global.EthDecimals)
       }
-      const preparedData = await prepareWriteContract(mintData)
-      const writeData = await writeContract(preparedData)
-      const txPendingData = waitForTransaction(writeData)
+
+      // console.log("mintData", mintData);
+      const preparedData = await prepareWriteContract(mintData);
+      // console.log("preparedData", preparedData);
+      const writeData = await writeContract(preparedData);
+      // console.log("writeData", writeData);
+      const txPendingData = waitForTransaction(writeData);
+      // console.log("txPendingData", txPendingData);
       toast.promise(txPendingData, {
         pending: "Please wait! Pending... 👌",
       });
 
       const txData = await txPendingData;
+      console.log(txData);
 
       if (txData && txData.status === "success") {
         toast.success(`Successfully deployed!`)
@@ -79,7 +91,7 @@ const CreateToken = ({ getContractAddress }) => {
         if (error?.shortMessage) {
           toast.error(error?.shortMessage);
         } else {
-          toast.error("Unknown Error! Something went wrong.");
+          toast.error("Deployment is failed!");
         }
       } catch (error) {
         toast.error("Error! Something went wrong.");
@@ -133,16 +145,32 @@ const CreateToken = ({ getContractAddress }) => {
   return (
     <div className="w-full flex justify-start items-center mt-4 flex-col gap-5">
       {/* {showInfoModal && <InfoModal setModal={setShowInfoModal} />} */}
-      <div className="flex justify-end font-medium text-center text-black rounded font-16 h-full mt-6 w-full">
-        <ConnectWallet
-          setWalletConnected={(val) => {
-            if (val === undefined)
-              setWalletConnected(false)
-            else
-              setWalletConnected(val)
-          }}
-        />
+      {/* <div className="flex justify-between font-medium text-center text-black rounded font-16 h-full mx-auto mt-6 w-full"> */}
+      <div className="justify-between items-center w-full my-5 max-w-[1300px] mx-auto flex flex-row gap-4">
+        <div className="flex justify-start items-start sm:w-full">
+          <img
+            src="/logo.png"
+            className="w-24 object-cover rounded-lg aspect-square"
+            alt=""
+          />
+        </div>
+        <label className="sm:block hidden text-3xl font-semibold  text-green-300 w-full text-center">
+          ERC404 Token LaunchPad
+        </label>
+        <div className="w-full">
+          <ConnectWallet
+            setWalletConnected={(val) => {
+              if (val === undefined)
+                setWalletConnected(false)
+              else
+                setWalletConnected(val)
+            }}
+          />
+        </div>
       </div>
+      <label className="sm:hidden text-3xl font-semibold  text-green-300 w-full text-center">
+        ERC404 Token LaunchPad
+      </label>
       <div className="grid grid-cols-2 gap-5 md:gap-0 md:flex justify-between max-w-[1200px] items-center w-full relative isolate">
         <div className="abc bg-white md:block hidden w-[90%] h-0.5 absolute top-[10px] left-[51%] -translate-x-1/2 -z-10"></div>
         <StepBox
