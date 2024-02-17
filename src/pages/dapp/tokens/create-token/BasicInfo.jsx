@@ -8,23 +8,23 @@ import { useNetwork } from "wagmi";
 
 const BasicInfo = () => {
   const { chain } = useNetwork();
-  const [chainType, setChainType] = useState(chain.name);
+  const [chainType, setChainType] = useState('');
   const { formData, setFormData } = useContext(formDataContext)
 
-  console.log (chain, "PPPPPPPPPPPPPP")
-  
   useEffect(() => {
-    if (chain.id === 1)
-      setChainType('mainnet')
-    else if (chain.id === 56)
-      setChainType('bsc')
-    else if (chain.id === 42161)
-      setChainType('arbitrum')
-    else if (chain.id === 137)
-      setChainType('polygon')
-    else if (chain.id === 324)
-      setChainType('zkSync')
-  }, [chain.id]);
+    if (chain){
+      if (chain.id === 1)
+        setChainType('mainnet')
+      else if (chain.id === 56)
+        setChainType('bsc')
+      else if (chain.id === 42161)
+        setChainType('arbitrum')
+      else if (chain.id === 137)
+        setChainType('polygon')
+      else if (chain.id === 324)
+        setChainType('zkSync')
+    }
+  }, [chain]);
 
   const handler = (e) => {
     const { name, value } = e.target;
