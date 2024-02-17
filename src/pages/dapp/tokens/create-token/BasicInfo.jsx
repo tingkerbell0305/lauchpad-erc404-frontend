@@ -1,12 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import SelectChainRadio from "../../../../components/SelectChainRadio";
 import FloatingLabelInput from "../../../../components/inputs/FloatingLabelInput";
-<<<<<<< HEAD
 // import { Link } from "react-router-dom";
-=======
-import { Link } from "react-router-dom";  
 
->>>>>>> 44e2a8a621fdc23e8d0eb42926d8b661f855db31
 import { formDataContext } from "../../../../contexts/formDataContext";
 import { useNetwork } from "wagmi";
 
