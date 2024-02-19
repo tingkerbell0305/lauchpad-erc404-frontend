@@ -19,20 +19,59 @@ const CreateToken = ({ getContractAddress }) => {
   const navigate = useNavigate();
   const [walletConnected, setWalletConnected] = useState(false)
   const [btnMsg, setBtnMsg] = useState("Mint Token");
-  const [errMsg, setErrMsg] = useState(false);
+  // const [errMsg, setErrMsg] = useState(false);
   const [pending, setPending] = useState(false);
 
-  const chain = useNetwork();
- 
+  const { chain } = useNetwork();
   const { formData } = useContext(formDataContext)
-  let mintData = {
-    chainId: global.chain.id,
+
+  // let mintData = {}
+  //   chainId: chain.id,
+  // }
+
+  const setMintData = () => {
+    if (chain) {
+      let mintData = {
+        chainId: chain.id,
+      }
+      if (chain.id === 1) {
+        mintData = {
+          ...mintData,
+          address: global.launchpad_contract_address.mainnet,
+          value: parseUnits("0.1", global.Decimals)
+        }
+      } else if (chain.id === 56) {
+        mintData = {
+          ...mintData,
+          address: global.launchpad_contract_address.bsc,
+          value: parseUnits("0.15", global.Decimals)
+        }
+      } else if (chain.id === 42161) {
+        mintData = {
+          ...mintData,
+          address: global.launchpad_contract_address.arbitrum,
+          value: parseUnits("0.1", global.Decimals)
+        }
+      } else if (chain.id === 137) {
+        mintData = {
+          ...mintData,
+          address: global.launchpad_contract_address.polygon,
+          value: parseUnits("50", global.Decimals)
+        }
+      } else if (chain.id === 324) {
+        mintData = {
+          ...mintData,
+          address: global.launchpad_contract_address.zkSync,
+          value: parseUnits("0.1", global.Decimals)
+        }
+      }
+    }
   }
 
   useEffect(() => {
     if (path.pathname === "/confirm" && pending) {
       setBtnMsg("Pending ")
-      setErrMsg("Please wait! Pending... 👌")
+      // setErrMsg("Please wait! Pending... 👌")
       return
     }
     setBtnMsg("Deploy")
@@ -41,13 +80,15 @@ const CreateToken = ({ getContractAddress }) => {
   const mintToken = async () => {
     setPending(true);
     try {
-      console.log("type", typeof formData.imageCount);
-      console.log("type", typeof formData.decimals);
-      console.log("type", typeof formData.fee);
-      console.log("before", parseUnits(formData.imageCount, 0));
+      // console.log("type", typeof formData.imageCount);
+      // console.log("type", typeof formData.decimals);
+      // console.log("type", typeof formData.fee);
+      // console.log("before", parseUnits(formData.imageCount, 0));
+      setMintData();
+      console.log('MintData >>>>>>>111', mintData);
       mintData = {
         ...mintData,
-        address: global.launchpad_contract_address,
+        // address: global.launchpad_contract_address,
         abi: launchpadContractABI,
         functionName: 'deployToken',
         args: [
@@ -62,8 +103,9 @@ const CreateToken = ({ getContractAddress }) => {
           formData.website,
           formData.description
         ],
-        value: parseUnits("0.1", global.EthDecimals)
+        // value: parseUnits("0.1", global.Decimals)
       }
+      console.log('MintData >>>>>>>222', mintData);
 
       // console.log("mintData", mintData);
       const preparedData = await prepareWriteContract(mintData);

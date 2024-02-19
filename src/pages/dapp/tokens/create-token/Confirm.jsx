@@ -4,9 +4,11 @@
 import { useContext } from "react";
 import { formDataContext } from "../../../../contexts/formDataContext";
 import { toast } from "react-toastify";
+import { useNetwork } from "wagmi";
 
 const Confirm = ({ deployedContractAddr }) => {
   const { formData } = useContext(formDataContext)
+  const {chain} = useNetwork();
 
   const copyAddress = () => {
     if (navigator.clipboard.writeText(deployedContractAddr))
@@ -16,7 +18,7 @@ const Confirm = ({ deployedContractAddr }) => {
   return (
     <div className="flex justify-start items-start flex-col w-full max-w-[1300px] mx-auto gap-5">
       <div className="grid grid-cols-1  abc bg-black p-5 rounded-xl xl:grid-cols-2 w-full gap-4 xl:gap-8">
-        <TokenDetailRow name="Blockchain Network" desc="Ethereum" />
+        <TokenDetailRow name="Blockchain Network" desc={chain.name} />
         <TokenDetailRow name="Token Name" desc={formData.name} />
         <TokenDetailRow name="Token Symbol" desc={formData.symbol} />
         <TokenDetailRow name="Token Supply" desc={formData.supply} />
