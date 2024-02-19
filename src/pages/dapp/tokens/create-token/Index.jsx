@@ -31,7 +31,7 @@ const CreateToken = ({ getContractAddress }) => {
 
   const setMintData = () => {
     if (chain) {
-      let mintData = {
+      mintData = {
         chainId: chain.id,
       }
       if (chain.id === 1) {
@@ -56,7 +56,7 @@ const CreateToken = ({ getContractAddress }) => {
         mintData = {
           ...mintData,
           address: global.launchpad_contract_address.polygon,
-          value: parseUnits("50", global.Decimals)
+          value: parseUnits("5", global.Decimals)
         }
       } else if (chain.id === 324) {
         mintData = {
@@ -78,14 +78,54 @@ const CreateToken = ({ getContractAddress }) => {
   }, [pending])
 
   const mintToken = async () => {
+    let mintData = {}
     setPending(true);
     try {
       // console.log("type", typeof formData.imageCount);
       // console.log("type", typeof formData.decimals);
       // console.log("type", typeof formData.fee);
       // console.log("before", parseUnits(formData.imageCount, 0));
-      setMintData();
-      console.log('MintData >>>>>>>111', mintData);
+
+      // setMintData();
+
+      if (chain) {
+        mintData = {
+          chainId: chain.id,
+        }
+        if (chain.id === 1) {
+          mintData = {
+            ...mintData,
+            address: global.launchpad_contract_address.mainnet,
+            value: parseUnits("0.1", global.Decimals)
+          }
+        } else if (chain.id === 56) {
+          mintData = {
+            ...mintData,
+            address: global.launchpad_contract_address.bsc,
+            value: parseUnits("0.15", global.Decimals)
+          }
+        } else if (chain.id === 42161) {
+          mintData = {
+            ...mintData,
+            address: global.launchpad_contract_address.arbitrum,
+            value: parseUnits("0.1", global.Decimals)
+          }
+        } else if (chain.id === 137) {
+          mintData = {
+            ...mintData,
+            address: global.launchpad_contract_address.polygon,
+            value: parseUnits("50", global.Decimals)
+          }
+        } else if (chain.id === 324) {
+          mintData = {
+            ...mintData,
+            address: global.launchpad_contract_address.zkSync,
+            value: parseUnits("0.1", global.Decimals)
+          }
+        }
+      }
+
+      // console.log('MintData >>>>>>>111', mintData);
       mintData = {
         ...mintData,
         // address: global.launchpad_contract_address,
@@ -105,11 +145,11 @@ const CreateToken = ({ getContractAddress }) => {
         ],
         // value: parseUnits("0.1", global.Decimals)
       }
-      console.log('MintData >>>>>>>222', mintData);
+      // console.log('MintData >>>>>>>222', mintData);
 
       // console.log("mintData", mintData);
       const preparedData = await prepareWriteContract(mintData);
-      // console.log("preparedData", preparedData);
+      console.log("preparedData", preparedData);
       const writeData = await writeContract(preparedData);
       // console.log("writeData", writeData);
       const txPendingData = waitForTransaction(writeData);
