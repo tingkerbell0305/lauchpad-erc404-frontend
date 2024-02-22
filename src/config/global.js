@@ -15,13 +15,13 @@ export const launchpad_contract_address_mainnet = {
     zkSync: "0x3a0246F245Cc54a71f6AaE3850eFF6D2B520977a"
 }
 
-// export const launchpad_contract_address_testnet = {
-//     goerli: "0x429f54cc1c2dfe0d250b03ad83fd83a5f58b9905",
-//     bscTestnet: "",
-//     arbitrumGoerli: "",
-//     polygonMumbai: "",
-//     zkSyncTestnet: ""
-// }
+export const launchpad_contract_address_testnet = {
+    goerli: "0x429f54cc1c2dfe0d250b03ad83fd83a5f58b9905",
+    bscTestnet: "",
+    arbitrumGoerli: "",
+    polygonMumbai: "",
+    zkSyncTestnet: "0x3a0246F245Cc54a71f6AaE3850eFF6D2B520977a"
+}
 
 export const mainnetChains = [mainnet, bsc, arbitrum, polygon, zkSync]
 
