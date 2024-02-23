@@ -25,49 +25,6 @@ const CreateToken = ({ getContractAddress }) => {
   const { chain } = useNetwork();
   const { formData } = useContext(formDataContext)
 
-  // let mintData = {}
-  //   chainId: chain.id,
-  // }
-
-  // const setMintData = () => {
-  //   if (chain) {
-  //     mintData = {
-  //       chainId: chain.id,
-  //     }
-  //     if (chain.id === 1) {
-  //       mintData = {
-  //         ...mintData,
-  //         address: global.launchpad_contract_address.mainnet,
-  //         value: parseUnits("0.1", global.Decimals)
-  //       }
-  //     } else if (chain.id === 56) {
-  //       mintData = {
-  //         ...mintData,
-  //         address: global.launchpad_contract_address.bsc,
-  //         value: parseUnits("0.15", global.Decimals)
-  //       }
-  //     } else if (chain.id === 42161) {
-  //       mintData = {
-  //         ...mintData,
-  //         address: global.launchpad_contract_address.arbitrum,
-  //         value: parseUnits("0.1", global.Decimals)
-  //       }
-  //     } else if (chain.id === 137) {
-  //       mintData = {
-  //         ...mintData,
-  //         address: global.launchpad_contract_address.polygon,
-  //         value: parseUnits("5", global.Decimals)
-  //       }
-  //     } else if (chain.id === 324) {
-  //       mintData = {
-  //         ...mintData,
-  //         address: global.launchpad_contract_address.zkSync,
-  //         value: parseUnits("0.1", global.Decimals)
-  //       }
-  //     }
-  //   }
-  // }
-
   useEffect(() => {
     if (path.pathname === "/confirm" && pending) {
       setBtnMsg("Pending ")
@@ -85,8 +42,6 @@ const CreateToken = ({ getContractAddress }) => {
       // console.log("type", typeof formData.decimals);
       // console.log("type", typeof formData.fee);
       // console.log("before", parseUnits(formData.imageCount, 0));
-
-      // setMintData();
 
       if (chain) {
         mintData = {

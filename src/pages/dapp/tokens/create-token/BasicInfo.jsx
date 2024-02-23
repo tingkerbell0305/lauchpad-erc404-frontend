@@ -5,6 +5,7 @@ import FloatingLabelInput from "../../../../components/inputs/FloatingLabelInput
 import { formDataContext } from "../../../../contexts/formDataContext";
 import { useNetwork } from "wagmi";
 import { IS_PRODUCT_MODE } from "../../../../config/global";
+import { toast } from "react-toastify";
 
 const BasicInfo = () => {
   const { chain } = useNetwork();
@@ -146,22 +147,23 @@ const BasicInfo = () => {
           alert('MetaMask is not installed. Please consider installing it: MetaMask [^2^]');
         }
       } else if (type === 'zkSync') {
-        setChainType(type)
-        if (window.ethereum) {
-          try {
-            // Request to switch to the Binance Smart Chain network
-            await window.ethereum.request({
-              method: 'wallet_switchEthereumChain',
-              params: [{ chainId: '0x144' }], // chainId must be in hexadecimal numbers
-            });
-          } catch (error) {
-            // Handle the error
-            console.error(error);
-          }
-        } else {
-          // MetaMask is not installed
-          alert('MetaMask is not installed. Please consider installing it: MetaMask [^2^]');
-        }
+        // setChainType(type)
+        // if (window.ethereum) {
+        //   try {
+        //     // Request to switch to the Binance Smart Chain network
+        //     await window.ethereum.request({
+        //       method: 'wallet_switchEthereumChain',
+        //       params: [{ chainId: '0x144' }], // chainId must be in hexadecimal numbers
+        //     });
+        //   } catch (error) {
+        //     // Handle the error
+        //     console.error(error);
+        //   }
+        // } else {
+        //   // MetaMask is not installed
+        //   alert('MetaMask is not installed. Please consider installing it: MetaMask [^2^]');
+        // }
+        toast.warn("Coming soon!")
       }
     }
     // setChainType(type)
