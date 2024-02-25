@@ -51,7 +51,7 @@ const CreateToken = ({ getContractAddress }) => {
           mintData = {
             ...mintData,
             address: global.launchpad_contract_address.zkSyncTestnet,
-            value: parseUnits("0.1", global.Decimals)
+            value: parseUnits("0.05", global.Decimals)
           }
         } else if (chain.id === 5) {
           mintData = {
@@ -63,7 +63,7 @@ const CreateToken = ({ getContractAddress }) => {
           mintData = {
             ...mintData,
             address: global.launchpad_contract_address.mainnet,
-            value: parseUnits("0.1", global.Decimals)
+            value: parseUnits("0.05", global.Decimals)
           }
         } else if (chain.id === 56) {
           mintData = {
@@ -75,7 +75,7 @@ const CreateToken = ({ getContractAddress }) => {
           mintData = {
             ...mintData,
             address: global.launchpad_contract_address.arbitrum,
-            value: parseUnits("0.1", global.Decimals)
+            value: parseUnits("0.05", global.Decimals)
           }
         } else if (chain.id === 137) {
           mintData = {
@@ -87,12 +87,13 @@ const CreateToken = ({ getContractAddress }) => {
           mintData = {
             ...mintData,
             address: global.launchpad_contract_address.zkSync,
-            value: parseUnits("0.1", global.Decimals)
+            value: parseUnits("0.05", global.Decimals)
           }
         }
       }
 
-      // console.log('MintData >>>>>>>111', mintData);
+      console.log('fee >>>>>>>111', formData.fee);
+      console.log('fee >>>>>>>222', parseUnits(formData.fee.toString(), 4));
       mintData = {
         ...mintData,
         // address: global.launchpad_contract_address,
@@ -105,6 +106,7 @@ const CreateToken = ({ getContractAddress }) => {
           formData.supply,
           formData.dataUri,
           parseUnits(formData.fee.toString(), 4),
+          // parseUnits('0.25', 4),
           formData.imageType,
           parseUnits(formData.imageCount, 0),
           formData.website,

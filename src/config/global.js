@@ -21,7 +21,7 @@ export const launchpad_contract_address_testnet = {
     arbitrumGoerli: "",
     polygonMumbai: "",
     // zkSyncTestnet: "0x7DB7eD06a68F5d97b7D8cE98BAbC116C82bAc27D"
-    zkSyncTestnet: "0xf8Ba27BBD5471cE09DEce8d82B6D01aCB23Db0E3"
+    zkSyncTestnet: "0x89a6F3486447b167fCAA4c4e24B52A533f539089"
 }
 
 export const mainnetChains = [mainnet, bsc, arbitrum, polygon, zkSync]
