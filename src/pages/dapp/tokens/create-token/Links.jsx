@@ -1,6 +1,7 @@
-import { useState, useContext, useRef, useEffect } from "react";
+import { useState, useContext, useRef, useEffect, useMemo } from "react";
 import FloatingLabelInput from "../../../../components/inputs/FloatingLabelInput";
 import { formDataContext } from "../../../../contexts/formDataContext";
+import { useNetwork } from "wagmi";
 // import { Link } from "react-router-dom";
 // import ImageUrlUploader from "../../../../components/ImageUrlUploader";
 
@@ -8,7 +9,9 @@ const Links = () => {
   const { formData, setFormData } = useContext(formDataContext)
   const [dropDownSelected, setDropDownSelected] = useState(false)
   const wrapperRef = useRef(null);
-  const [selected, setSelected] = useState(0.3)
+  const [selected, setSelected] = useState(1)
+  const [isZksync, setIsZksync] = useState(false)
+  const { chain } = useNetwork()
   
   useEffect(() => {
     setFormData({
@@ -17,10 +20,30 @@ const Links = () => {
     })
   }, [selected])
   
+  useEffect(() => {
+    isZksyncSelected();
+  }, [chain.id])
+
   const handler = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  // const isZksync = useMemo( () => {
+  //   if ( chain.id === 324 )
+  //     return true;
+  //   return false;
+  // }, [chain.id]);
+
+  const isZksyncSelected = () => {
+    if (chain) {
+      if (chain.id === 324 || chain.id === 280 ) {
+        setIsZksync(true)
+        return;
+      }
+    }
+    setIsZksync(false)
+  }
   
   const fileHandler = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -49,6 +72,7 @@ const Links = () => {
   };
 
   const dropdownList = [0.3, 1]
+  const dropdownList1 = [0.25, 1]
 
   return (
     <>
@@ -107,6 +131,21 @@ const Links = () => {
                     aria-labelledby="dropdownButton"
                   >
                     {
+                      isZksync ? 
+                      dropdownList1.map((item, idx) =>
+                        <li key={idx}>
+                          <a
+                            className="flex flex-row items-center px-4 hover:bg-dropdown dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                            onClick={() => {
+                              setDropDownSelected(false)
+                              setSelected(item)
+                            }}
+                          >
+                            {item}
+                          </a>
+                        </li>
+                      ) :
+                      
                       dropdownList.map((item, idx) =>
                         <li key={idx}>
                           <a
