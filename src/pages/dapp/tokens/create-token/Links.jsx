@@ -36,9 +36,11 @@ const Links = () => {
   // }, [chain.id]);
 
   const isZksyncSelected = () => {
-    if (chain.id === 324 || chain.id === 280 ) {
-      setIsZksync(true)
-      return;
+    if (chain) {
+      if (chain.id === 324 || chain.id === 280 ) {
+        setIsZksync(true)
+        return;
+      }
     }
     setIsZksync(false)
   }
